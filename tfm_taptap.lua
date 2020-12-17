@@ -22,7 +22,7 @@ tfm.exec.bindKeyboard(name, 0, true, true)
 end
 
 function eventLoop(currentTime, timeRemaining)
-if timeRemaining > 5000 then
+if timeRemaining > 10000 then
 if last_note < os.time() - 1500 then
 note = random_num[math.random(4)]
 last_note = os.time()
@@ -38,13 +38,16 @@ for index, id in ipairs(to_remove) do
 tfm.exec.removeObject(id)
 end
 else
+if timeRemaining > 5000 then
+for name,player in pairs(tfm.get.room.playerList) do
+highest_score = math.max(player.score, highest_score)
+end
 for name,player in pairs(tfm.get.room.playerList) do
 if player.score == highest_score then
 tfm.exec.giveCheese(name)
 tfm.exec.playerVictory(name)
-print("You won!")
-else
-print("You didn't win :(")
+print(name.." won!")
+end
 end
 end
 end
@@ -68,7 +71,6 @@ elseif tfm.get.room.objectList[id].y < 205 then
 print("Too early!")
 end
 end
-highest_score = math.max(tfm.get.room.playerList[name].score, highest_score)
 end
 
 function eventKeyboard(name, key, down, x, y)
