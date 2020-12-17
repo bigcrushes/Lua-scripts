@@ -104,6 +104,13 @@ end
 end
 end
 
+function eventChatCommand(name,command)
+if command == "help" then
+print("Welcome to #taptap! Press the buttons as the boxes fall through! Hit it on the bright green to earn 3 points and on the lime green for 1 point! Each round lasts 1 min and 50 seconds. May the best tapper win!")
+end
+end
+
+
 for name,player in pairs(tfm.get.room.playerList) do
 eventNewPlayer(name)
 end
