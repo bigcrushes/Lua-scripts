@@ -3,6 +3,7 @@ random_num = {100,300,500,700}
 highest_score = 0
 last_played = {}
 scores = {}
+won = False
 
 function eventNewPlayer(name)
   last_played[name] = -1
@@ -38,7 +39,7 @@ function eventLoop(currentTime, timeRemaining)
       tfm.exec.removeObject(id)
     end
     else
-    if timeRemaining > 5000 then
+    if timeRemaining < 5000 and not won then
       for name,player in pairs(tfm.get.room.playerList) do
         highest_score = math.max(player.score, highest_score)
       end
@@ -47,6 +48,7 @@ function eventLoop(currentTime, timeRemaining)
           tfm.exec.giveCheese(name)
           tfm.exec.playerVictory(name)
           print(name.." won!")
+          won = True
         end
       end
     end
@@ -115,9 +117,11 @@ for name,player in pairs(tfm.get.room.playerList) do
   eventNewPlayer(name)
 end
 
+
 tfm.exec.disableAutoShaman(true)
 tfm.exec.disableAfkDeath(true)
 tfm.exec.disableAutoScore(True)
-tfm.exec.setGameTime(120)
+
 tfm.exec.newGame(7815496)
+tfm.exec.setGameTime(60)
 
